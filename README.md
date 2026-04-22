@@ -32,34 +32,37 @@ The paper's appendix provides published tables and country membership, but not t
 
 ## Open locally
 
-Open [index.html](D:/CEEW/political-stability-dashboard/index.html) in a browser.
+Open `index.html` in a browser.
 
-## Deploy with GitHub and Render
+## Deploy with GitHub Pages
 
-This project is ready to deploy as a Render Static Site.
+This project is a static website and can be deployed directly with GitHub Pages.
 
-Files added for deployment:
+### Option A (recommended): GitHub Actions workflow
 
-- [render.yaml](D:/CEEW/political-stability-dashboard/render.yaml)
-- [.gitignore](D:/CEEW/political-stability-dashboard/.gitignore)
+This repository includes a Pages workflow at `.github/workflows/deploy-pages.yml`.
 
-Recommended flow:
+1. Push to your `main` branch.
+2. In GitHub, go to `Settings` -> `Pages`.
+3. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+4. The workflow will publish the site automatically on each push to `main`.
 
-1. Create a new GitHub repository.
-2. Upload the contents of `D:\CEEW\political-stability-dashboard`.
-3. In Render, choose `New` -> `Static Site`.
-4. Connect your GitHub account and select the repository.
-5. Render should detect `render.yaml` automatically.
-6. If you configure manually, use:
-   - Build Command: `true`
-   - Publish Directory: `.`
+### Option B: Branch deployment
 
-Important:
+If you prefer branch-based deployment:
 
-- This is a static site, so Render Static Site is the correct product.
-- You do not need a Node/Express server for the current version.
-- Every push to the connected GitHub branch can trigger an automatic redeploy on Render.
+1. Go to `Settings` -> `Pages`.
+2. Set **Source** to **Deploy from a branch**.
+3. Choose branch `main` and folder `/ (root)`.
+4. Save and wait for the Pages URL to be published.
 
-## Current blocker
+## Verify deployment
 
-GitHub CLI is installed in this environment, but it is not authenticated yet. That means the app is deployment-ready, but the final GitHub push and Render hookup still require your GitHub login.
+1. Open the published GitHub Pages URL.
+2. Hard refresh once (`Ctrl+Shift+R` / `Cmd+Shift+R`).
+3. Confirm all sections/charts render and browser console has no errors.
+
+## Optional custom domain
+
+1. Add your domain in `Settings` -> `Pages`.
+2. Configure DNS records exactly as GitHub Pages instructs.
