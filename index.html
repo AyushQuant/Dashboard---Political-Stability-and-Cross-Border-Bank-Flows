@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Political Stability and Cross-Border Bank Flows Dashboard</title>
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <p class="eyebrow">Research Companion</p>
+        <h1>Political Stability and Cross-Border Bank Flows</h1>
+        <p class="brand-copy">
+          A replication-first, academically labeled dashboard.
+        </p>
+      </div>
+
+      <div class="control-panel">
+        <label class="field">
+          <span>Country</span>
+          <select id="country-select"></select>
+        </label>
+
+        <label class="field">
+          <span>Sample</span>
+          <select id="sample-select">
+            <option value="all">All countries</option>
+            <option value="oecd">OECD</option>
+            <option value="non_oecd">Non-OECD</option>
+            <option value="pre_crisis">Pre-2008</option>
+            <option value="post_crisis">Post-2008</option>
+          </select>
+        </label>
+      </div>
+
+      <nav class="tab-list" id="tab-list"></nav>
+
+      <div class="source-card">
+        <h2>Source Discipline</h2>
+        <p>
+          Replication views are limited to published paper tables, sample splits, and variable definitions from the paper.
+        </p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section class="masthead-band">
+        <div class="masthead-copy">
+          <p class="eyebrow">Digital Research Companion</p>
+          <h2>Replication-first evidence for a research-grade reading of the paper</h2>
+          <p>
+            Designed to present the paper as a serious empirical object: theory, published estimates, and disciplined interpretation.
+          </p>
+        </div>
+        <div class="masthead-meta">
+          <div>
+            <span>Author</span>
+            <strong>Mafalda Venancio de Vasconcelos</strong>
+          </div>
+          <div>
+            <span>Journal</span>
+            <strong>Journal of Risk and Financial Management</strong>
+          </div>
+          <div>
+            <span>Design stance</span>
+            <strong>Publication-grade, academically labeled</strong>
+          </div>
+        </div>
+      </section>
+
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Paper</p>
+          <h2>Journal of Risk and Financial Management, 2020</h2>
+        </div>
+      </header>
+
+      <section id="tab-content" class="tab-content"></section>
+    </main>
+  </div>
+
+  <script src="./assets/data.js"></script>
+  <script src="./assets/app.js"></script>
+  <script>
+    (function () {
+      const sectionId = "model-specification-section";
+      const template = `
+        <section id="${sectionId}" class="panel model-spec-section">
+          <div class="model-spec-header">
+            <p class="eyebrow">Model Specification</p>
+            <h3>Model Specification</h3>
+            <p class="subtle">Fixed-effects panel regression framework used in the paper</p>
+          </div>
+
+          <div class="model-equation-box">
+            <div class="model-equation">
+              \\[
+                \\log(Y_{i,t}) = \\beta_0 + \\beta_1\\,\\text{PoliticalStability}_{i,t-1}
+                + \\beta_2\\,\\text{GDPGrowth}_{i,t-1}
+                + \\beta_3\\,\\text{EconomicRisk}_{i,t-1}
+                + \\beta_4\\,\\text{FinancialRisk}_{i,t-1}
+                + \\alpha_i + \\alpha_t + \\varepsilon_{i,t}
+              \\]
+            </div>
+          </div>
+
+          <div class="model-vars-grid">
+            <article class="model-var-card"><strong>Y<sub>i,t</sub></strong><p>Cross-border bank flows (log)</p></article>
+            <article class="model-var-card"><strong>PoliticalStability</strong><p>Composite index (ICRG, higher = lower risk)</p></article>
+            <article class="model-var-card"><strong>GDPGrowth</strong><p>GDP volume change (%)</p></article>
+            <article class="model-var-card"><strong>EconomicRisk</strong><p>Macroeconomic risk indicator</p></article>
+            <article class="model-var-card"><strong>FinancialRisk</strong><p>Country's financial stability indicator</p></article>
+            <article class="model-var-card"><strong>α<sub>i</sub></strong><p>Country fixed effects</p></article>
+            <article class="model-var-card"><strong>α<sub>t</sub></strong><p>Time fixed effects</p></article>
+            <article class="model-var-card"><strong>ε<sub>i,t</sub></strong><p>Error term</p></article>
+          </div>
+
+          <div class="model-interpretation-box">
+            <p class="eyebrow">Interpretation</p>
+            <p>A 10-point increase in political stability is associated with approximately a 25% increase in cross-border bank flows, holding other factors constant.</p>
+          </div>
+        </section>
+      `;
+
+      function isOverviewActive() {
+        const activeTab = document.querySelector("#tab-list .tab-button.active");
+        return activeTab && activeTab.textContent.trim().toLowerCase() === "overview";
+      }
+
+      function syncModelSpecSection() {
+        const tabContent = document.getElementById("tab-content");
+        if (!tabContent) return;
+
+        const existing = document.getElementById(sectionId);
+        if (isOverviewActive()) {
+          if (!existing) {
+            tabContent.insertAdjacentHTML("beforeend", template);
+          }
+          if (window.MathJax && typeof window.MathJax.typesetPromise === "function") {
+            const section = document.getElementById(sectionId);
+            if (section) {
+              window.MathJax.typesetPromise([section]).catch(function () {});
+            }
+          }
+        } else if (existing) {
+          existing.remove();
+        }
+      }
+
+      const tabContent = document.getElementById("tab-content");
+      const tabList = document.getElementById("tab-list");
+
+      if (tabContent) {
+        new MutationObserver(syncModelSpecSection).observe(tabContent, { childList: true });
+      }
+      if (tabList) {
+        new MutationObserver(syncModelSpecSection).observe(tabList, {
+          subtree: true,
+          attributes: true,
+          attributeFilter: ["class"]
+        });
+      }
+
+      document.addEventListener("click", function (event) {
+        if (event.target.closest("#tab-list .tab-button")) {
+          setTimeout(syncModelSpecSection, 0);
+        }
+      });
+
+      window.addEventListener("load", function () {
+        setTimeout(syncModelSpecSection, 0);
+      });
+    })();
+  </script>
+</body>
+</html>
