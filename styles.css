@@ -626,3 +626,92 @@ select {
     flex-direction: column;
   }
 }
+
+@media (max-width: 600px) {
+  .sidebar {
+    padding: 18px 14px;
+    gap: 16px;
+  }
+
+  .brand h1 {
+    font-size: 1.35rem;
+  }
+
+  .control-panel,
+  .source-card {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .tab-button {
+    padding: 10px 12px;
+    font-size: 0.92rem;
+  }
+
+  .main-content {
+    padding: 14px 12px 20px;
+  }
+
+  .masthead-band {
+    padding: 14px;
+    border-radius: 18px;
+    gap: 12px;
+  }
+
+  .masthead-band h2 {
+    font-size: 1.25rem;
+  }
+
+  .topbar {
+    margin-bottom: 16px;
+  }
+
+  .topbar h2 {
+    font-size: 1.1rem;
+  }
+
+  .panel,
+  .hero-card {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .hero-card h3,
+  .panel h3 {
+    font-size: 1.2rem;
+  }
+
+  .theory-node {
+    min-height: auto;
+    padding: 14px 12px;
+  }
+
+  .coef-strip-row {
+    grid-template-columns: 96px minmax(0, 1fr) 58px;
+    gap: 8px;
+    font-size: 0.88rem;
+  }
+
+  .data-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .data-table th,
+  .data-table td {
+    white-space: nowrap;
+    padding: 9px 8px;
+    font-size: 0.88rem;
+  }
+
+  .model-equation-box {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .model-equation {
+    min-width: 520px;
+    font-size: 0.98rem;
+  }
+}
